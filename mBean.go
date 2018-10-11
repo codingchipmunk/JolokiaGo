@@ -2,6 +2,9 @@ package jolokiaClient
 
 import "bytes"
 
+/*
+
+ */
 type MBean struct {
 	Domain  string
 	Context string
