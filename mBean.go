@@ -56,3 +56,33 @@ func writeAttribute(buff *bytes.Buffer, attribute_name string, attribute_value s
 	buff.WriteString(attribute_value)
 	buff.WriteByte(Attribute_seperator)
 }
+
+//	Unmarshals a text into an MBean object
+func (bean *MBean) UnmarshalText(text []byte) error {
+	mainSplit := bytes.SplitN(text, []byte{Domain_seperator}, 2)
+	var attribSlice []byte
+	if len(mainSplit) > 1 {
+		attribSlice = mainSplit[1]
+		bean.Domain = string(mainSplit[0])
+	} else {
+		attribSlice = mainSplit[0]
+	}
+	attribSplit := bytes.Split(attribSlice, []byte{Attribute_seperator})
+	for i := range attribSplit {
+		bean.extractAttribute(attribSplit[i])
+	}
+
+	return nil
+}
+
+func (bean *MBean) extractAttribute(text []byte) {
+	split := bytes.SplitN(text, []byte{Attribute_assignment}, 2)
+	attrName := split[0]
+	if bytes.Equal(attrName, []byte(Context_identifier)) {
+		bean.Context = string(split[1])
+	} else if bytes.Equal(attrName, []byte(Type_identifier)) {
+		bean.Type = string(split[1])
+	} else if bytes.Equal(attrName, []byte(Name_identifier)) {
+		bean.Name = string(split[1])
+	}
+}
