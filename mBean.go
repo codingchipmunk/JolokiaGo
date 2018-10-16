@@ -6,10 +6,10 @@ import "bytes"
 //	When marsahlled it will omit fields with empty strings
  */
 type MBean struct {
-	Domain  string
-	Context string
-	Type    string
-	Name    string
+	Domain  string `json:"domain,omitempty"`
+	Context string `json:"context,omitempty"`
+	Type    string `json:"type,omitempty"`
+	Name    string `json:"name,omitempty"`
 }
 
 
