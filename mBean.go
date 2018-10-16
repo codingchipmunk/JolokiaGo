@@ -4,7 +4,6 @@ import "bytes"
 
 //	Represents an MBean with its respective attributes. Implements the TextMarshaler and TextUnmarshaler interface.
 //	When marsahlled it will omit fields with empty strings
- */
 type MBean struct {
 	Domain  string `json:"domain,omitempty"`
 	Context string `json:"context,omitempty"`
