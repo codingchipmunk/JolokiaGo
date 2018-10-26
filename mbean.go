@@ -63,12 +63,13 @@ func writeAttribute(buff *bytes.Buffer, attributeName string, attributeValue str
 func (bean *MBean) UnmarshalText(text []byte) error {
 	mainSplit := bytes.SplitN(text, []byte{domainSeperator}, 2)
 	var attribSlice []byte
+	bean.Domain = string(mainSplit[0])
 	if len(mainSplit) > 1 {
 		attribSlice = mainSplit[1]
-		bean.Domain = string(mainSplit[0])
 	} else {
-		attribSlice = mainSplit[0]
+		return nil
 	}
+
 	attribSplit := bytes.Split(attribSlice, []byte{attributeSeperator})
 	for i := range attribSplit {
 		bean.extractAttribute(attribSplit[i])
