@@ -7,17 +7,19 @@ const (
 	typeVal    = "testingType"
 	nameVal    = "testingName"
 )
+
 //Separators and assignments
-const(
+const (
 	//ds (domain separator) separates domain from attributes
 	ds = ":"
 	//s (seperator) separates multiple attribute assignments
-	s          = ","
+	s = ","
 	//attAss (attribute assignment) assignes a value to an attribute
-	attAss     = "="
+	attAss = "="
 )
+
 //Concatenated fields for convenient use in the Text-Field
-const(
+const (
 	domainT  = domainVal + ds
 	typeT    = "type" + attAss + typeVal
 	nameT    = "name" + attAss + nameVal
@@ -31,7 +33,6 @@ var mbeanTextMarshalingSets = []struct {
 	Text  string
 }{
 	{"Full MBean", MBean{Domain: domainVal, Context: contextVal, Type: typeVal, Name: nameVal}, domainT + contextT + s + typeT + s + nameT},
-	{"MBean with missing domain", MBean{Context: contextVal, Type: typeVal, Name: nameVal}, contextT + s + typeT + s + nameT},
 	{"MBean with one missing attribute [name]", MBean{Domain: domainVal, Context: contextVal, Type: typeVal}, domainT + contextT + s + typeT},
 	{"MBean with one missing attribute [context]", MBean{Domain: domainVal, Name: nameVal, Type: typeVal}, domainT + typeT + s + nameT},
 	{"MBean with one missing attribute [type]", MBean{Domain: domainVal, Context: contextVal, Name: nameVal}, domainT + contextT + s + nameT},
