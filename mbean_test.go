@@ -1,15 +1,14 @@
-package mBean
+package JolokiaGo
 
 import (
-	"github.com/codingchipmunk/JolokiaGo"
 	"testing"
 )
 
 
 //	TestMBean_MarshalText tests if the MarshalText function works correctly
-//	Uses the MBeans from MBean_text_marshaling_sets and compares the result to the Text field
+//	Uses the MBeans from mbeanTextMarshalingSets and compares the result to the Text field
 func TestMBean_MarshalText(t *testing.T) {
-	for _, testset := range MBean_text_marshaling_sets{
+	for _, testset := range mbeanTextMarshalingSets {
 		t.Run(testset.Name, func(t *testing.T) {
 			got, err := testset.MBean.MarshalText()
 			if err != nil {
@@ -26,11 +25,11 @@ func TestMBean_MarshalText(t *testing.T) {
 }
 
 //	TestMBean_UnmarshalText tests if the UnmarshalText function works correctly.
-//	Uses the Text - Value from MBean_text_marshaling_sets and compares the result to the MBean stored there
+//	Uses the Text - Value from mbeanTextMarshalingSets and compares the result to the MBean stored there
 func TestMBean_UnmarshalText(t *testing.T){
-	for _, testset := range MBean_text_marshaling_sets{
+	for _, testset := range mbeanTextMarshalingSets {
 		t.Run(testset.Name, func(t *testing.T) {
-			bean := jolokiaClient.MBean{}
+			bean := MBean{}
 			err := bean.UnmarshalText([]byte(testset.Text))
 			if err != nil {
 				t.Error("Unexpected error: " + err.Error())

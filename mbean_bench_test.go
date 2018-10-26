@@ -1,13 +1,13 @@
-package mBean
+package JolokiaGo
 
 import (
 	"encoding/json"
 	"testing"
 )
 
-//	Benchmarks the MarshalText function with the MBean_text_marshaling_sets testsets
+//	Benchmarks the MarshalText function with the mbeanTextMarshalingSets testsets
 func BenchmarkMBean_MarshalText(b *testing.B) {
-	testSets := MBean_text_marshaling_sets
+	testSets := mbeanTextMarshalingSets
 	b.ResetTimer()
 	for _,testSet := range testSets{
 		b.Run(testSet.Name, func(b *testing.B) {
@@ -19,9 +19,9 @@ func BenchmarkMBean_MarshalText(b *testing.B) {
 	}
 }
 
-//	Benchmarks the UnMarshalText function with the MBean_text_marshaling_sets testsets
+//	Benchmarks the UnMarshalText function with the mbeanTextMarshalingSets testsets
 func BenchmarkMBean_UnMarshalText(b *testing.B) {
-	testSets := MBean_text_marshaling_sets
+	testSets := mbeanTextMarshalingSets
 	b.ResetTimer()
 	for _,testSet := range testSets{
 		bt := []byte(testSet.Text)
@@ -35,9 +35,9 @@ func BenchmarkMBean_UnMarshalText(b *testing.B) {
 }
 
 //	Benchmarks the marshaling of an MBean Object with json.Marshal
-//	Uses the MBean_text_marshaling_sets testsets
+//	Uses the mbeanTextMarshalingSets testsets
 func BenchmarkMBean_MarshalJSON(b *testing.B){
-	testSets := MBean_text_marshaling_sets
+	testSets := mbeanTextMarshalingSets
 	b.ResetTimer()
 	for _,testSet := range testSets{
 		b.Run(testSet.Name, func(b *testing.B) {

@@ -1,6 +1,8 @@
 package requests
 
-import "github.com/codingchipmunk/JolokiaGo"
+import (
+	"github.com/codingchipmunk/JolokiaGo"
+)
 
 //	Base represents the fields which will always be required in a request to Jolokia.
 //	Type should always be given, while Command or MBean may be left empty. If empty they will not be marshalled into JSON.
