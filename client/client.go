@@ -1,6 +1,9 @@
 package client
 
-import "net/http"
+import (
+	"github.com/codingchipmunk/JolokiaGo/responses"
+	"net/http"
+)
 
 type Client struct{
 	url string
@@ -8,6 +11,6 @@ type Client struct{
 	sseID string
 }
 
-func (jc *Client) MakeRequest(request *interface{}) (ResponseRoot, error){
-
+func (jc *Client) MakeRequest(request *interface{}) (resp responses.Root, err error){
+	
 }
