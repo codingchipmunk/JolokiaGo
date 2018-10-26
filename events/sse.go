@@ -1,4 +1,4 @@
-package jolokiaSSEStructs
+package events
 
 import (
 	"encoding/json"
@@ -6,14 +6,14 @@ import (
 	"time"
 )
 
-type SSERoot struct {
-	Dropped       int               `json:"dropped"`
-	Handle        string            `json:"handle"`
-	Handback      string            `json:"handback"`
-	Notifications []SSENotification `json:"notifications"`
+type Root struct {
+	Dropped       int            `json:"dropped"`
+	Handle        string         `json:"handle"`
+	Handback      string         `json:"handback"`
+	Notifications []Notification `json:"notifications"`
 }
 
-type SSENotification struct {
+type Notification struct {
 	TimeStamp      IntTimeWrapper  `json:"timeStamp"`
 	SequenceNumber int             `json:"sequenceNumber"`
 	UserData       json.RawMessage `json:"userData"`
