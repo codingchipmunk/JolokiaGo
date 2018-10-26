@@ -12,12 +12,14 @@ import (
 
 const contentType = "application/json"
 
+// Client holds fields needed to communicate with a Jolokia agent
 type Client struct {
 	url    string
 	client *http.Client
 	sseID  string
 }
 
+// MakePOSTRequest makes an POST request to the Jolokia agent using the http.Client given to the client struct
 func (jc *Client) MakePOSTRequest(request requests.POSTRequest) (resp responses.Root, err error){
 	// Marshal the request
 	body, err := request.POSTBody()
@@ -36,6 +38,7 @@ func (jc *Client) MakePOSTRequest(request requests.POSTRequest) (resp responses.
 	return unmarshalResponse(httpResp.Body)
 }
 
+// MakeGETRequest makes an GET request to the Jolokia agent using the http.Client given to the client struct
 func (jc *Client) MakeGETRequest(request requests.GETRequest) (resp responses.Root, err error){
 	// Create a new Buffer for the url and the get-params
 	urlBuff := bytes.Buffer{}
@@ -57,6 +60,7 @@ func (jc *Client) MakeGETRequest(request requests.GETRequest) (resp responses.Ro
 
 }
 
+// unmarshalResponse unmarshals the response from a response body (or any struct implementing the io.ReadCloser interface)
 func unmarshalResponse(responseBody io.ReadCloser) (resp responses.Root, err error) {
 	// Read the response body
 	httpBody, err := ioutil.ReadAll(responseBody)

@@ -11,12 +11,14 @@ type MBean struct {
 	Name    string `json:"name,omitempty"`
 }
 
-const Context_identifier = "context"
-const Type_identifier = "type"
-const Name_identifier = "name"
-const Domain_seperator = ':'
-const Attribute_seperator = ','
-const Attribute_assignment = '='
+const (
+	contextIdentifier   = "context"
+	typeIdentifier      = "type"
+	nameIdentifier      = "name"
+	domainSeperator     = ':'
+	attributeSeperator  = ','
+	attributeAssignment = '='
+)
 
 //	Marsahlls an MBean into a form of Domain:context=bean.context,type=bean.type,name=bean.name
 //	Empty fields will be ignored when marshalled
@@ -26,18 +28,18 @@ func (bean *MBean) MarshalText() ([]byte, error) {
 	// Omit writing a domain if its empty
 	if bean.Domain != "" {
 		buff.WriteString(bean.Domain)
-		buff.WriteByte(Domain_seperator)
+		buff.WriteByte(domainSeperator)
 	}
 
 	// Omit empty attributes
 	if bean.Context != "" {
-		writeAttribute(&buff, Context_identifier, bean.Context)
+		writeAttribute(&buff, contextIdentifier, bean.Context)
 	}
 	if bean.Type != "" {
-		writeAttribute(&buff, Type_identifier, bean.Type)
+		writeAttribute(&buff, typeIdentifier, bean.Type)
 	}
 	if bean.Name != "" {
-		writeAttribute(&buff, Name_identifier, bean.Name)
+		writeAttribute(&buff, nameIdentifier, bean.Name)
 	}
 
 	// if the buffer is empty, return it without modifications
@@ -50,16 +52,16 @@ func (bean *MBean) MarshalText() ([]byte, error) {
 }
 
 //	Calls a set of functions to write the attribute name and its value into the buffer
-func writeAttribute(buff *bytes.Buffer, attribute_name string, attribute_value string) {
-	buff.WriteString(attribute_name)
-	buff.WriteByte(Attribute_assignment)
-	buff.WriteString(attribute_value)
-	buff.WriteByte(Attribute_seperator)
+func writeAttribute(buff *bytes.Buffer, attributeName string, attributeValue string) {
+	buff.WriteString(attributeName)
+	buff.WriteByte(attributeAssignment)
+	buff.WriteString(attributeValue)
+	buff.WriteByte(attributeSeperator)
 }
 
 //	Unmarshals a text into an MBean object
 func (bean *MBean) UnmarshalText(text []byte) error {
-	mainSplit := bytes.SplitN(text, []byte{Domain_seperator}, 2)
+	mainSplit := bytes.SplitN(text, []byte{domainSeperator}, 2)
 	var attribSlice []byte
 	if len(mainSplit) > 1 {
 		attribSlice = mainSplit[1]
@@ -67,7 +69,7 @@ func (bean *MBean) UnmarshalText(text []byte) error {
 	} else {
 		attribSlice = mainSplit[0]
 	}
-	attribSplit := bytes.Split(attribSlice, []byte{Attribute_seperator})
+	attribSplit := bytes.Split(attribSlice, []byte{attributeSeperator})
 	for i := range attribSplit {
 		bean.extractAttribute(attribSplit[i])
 	}
@@ -76,13 +78,13 @@ func (bean *MBean) UnmarshalText(text []byte) error {
 }
 
 func (bean *MBean) extractAttribute(text []byte) {
-	split := bytes.SplitN(text, []byte{Attribute_assignment}, 2)
+	split := bytes.SplitN(text, []byte{attributeAssignment}, 2)
 	attrName := split[0]
-	if bytes.Equal(attrName, []byte(Context_identifier)) {
+	if bytes.Equal(attrName, []byte(contextIdentifier)) {
 		bean.Context = string(split[1])
-	} else if bytes.Equal(attrName, []byte(Type_identifier)) {
+	} else if bytes.Equal(attrName, []byte(typeIdentifier)) {
 		bean.Type = string(split[1])
-	} else if bytes.Equal(attrName, []byte(Name_identifier)) {
+	} else if bytes.Equal(attrName, []byte(nameIdentifier)) {
 		bean.Name = string(split[1])
 	}
 }
