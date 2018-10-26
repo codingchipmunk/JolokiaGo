@@ -1,4 +1,4 @@
-package jolokiaClient
+package responses
 
 import "encoding/json"
 

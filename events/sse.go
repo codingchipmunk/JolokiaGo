@@ -1,4 +1,4 @@
-package jolokiaSSEStructs
+package events
 
 import (
 	"encoding/json"

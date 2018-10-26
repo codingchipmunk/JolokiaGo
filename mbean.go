@@ -1,4 +1,4 @@
-package jolokiaClient
+package JolokiaGo
 
 import "bytes"
 
