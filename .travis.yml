@@ -1,8 +1,10 @@
 language: go
 git:
   depth: false
+env:
+  - CODECOV_TOKEN="25f634e0-c4b1-4ee4-a83f-1df261f4ca54"
 go:
-  -1.11.x
-  -tip
+  - 1.11.x
+  - tip
 
-script: go test -covermode count
+script: go test -race -coverprofile=coverage.txt -covermode=atomic
