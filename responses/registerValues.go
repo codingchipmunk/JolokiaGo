@@ -1,7 +1,7 @@
-package responseValues
+package responses
 
-//	ResponseValue contains the root of the value field when a register request was made
-type ResponseValue struct {
+//	RegisterValue contains the root of the value field when a register request was made
+type RegisterValue struct {
 	Backend Backend `json:"backend"`
 	Id      string  `json:"id"`
 }
