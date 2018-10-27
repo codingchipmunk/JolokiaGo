@@ -1,4 +1,4 @@
-package JolokiaGo
+package jolokiago
 
 //Values for the MBean Fields
 const (

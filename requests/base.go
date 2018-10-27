@@ -12,7 +12,7 @@ type Base struct {
 	//Command which is needed for some requests. It won't be marshaled if left empty.
 	Command string `json:"command,omitempty"`
 	//MBean which is needed for some requests. It won't be marshaled if left empty.
-	MBean *JolokiaGo.MBean `json:"mbean,omitempty"`
+	MBean *jolokiago.MBean `json:"mbean,omitempty"`
 }
 
 //RegisterEvent represents the fields needed for a request to register a client identified by the ClientID field for JMX Notifications on a MBean.
