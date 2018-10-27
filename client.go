@@ -68,7 +68,7 @@ func unmarshalResponse(responseBody io.ReadCloser) (resp responses.Root, err err
 		return
 	}
 
-	// Unmarshal the response body into the response.Root struct
+	// Unmarshal the response body into the response.ResponseRoot struct
 	err = json.Unmarshal(httpBody, &resp)
 
 	return

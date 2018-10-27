@@ -3,7 +3,7 @@ package messages
 //RegisterEvent represents the fields needed for a request to register a client identified by the ClientID field for JMX Notifications on a MBean.
 //The value of the response is represented in responses.RegisterValue
 type RegisterEvent struct {
-	Base
+	BaseRequest
 	// Mode for JMXEvents. Can be SSE or Pull-based.
 	Mode string `json:"mode"`
 	// ClientID of the Jolokia Client
