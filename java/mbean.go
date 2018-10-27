@@ -1,4 +1,4 @@
-package JolokiaGo
+package java
 
 import "bytes"
 
