@@ -43,11 +43,11 @@ func (jc *Client) MakeGETRequest(request requests.GETRequest) (resp responses.Ro
 	// Create a new Buffer for the url and the get-params
 	urlBuff := bytes.Buffer{}
 	urlBuff.WriteString(jc.url)
-	err = request.AppendRequest(&urlBuff)
+	bts, err := request.GetAppendix()
 	if err != nil {
 		return
 	}
-
+	urlBuff.Write(bts)
 	// Use the http client to make the request
 	httpResp, err := jc.client.Get(urlBuff.String())
 	if err != nil {
