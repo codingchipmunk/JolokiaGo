@@ -35,18 +35,23 @@ type IntTimeWrapper struct {
 // Example:
 // The byte representation of the string "12345678" will be interpreted as 12345.678 secs in unix time
 func (cT *IntTimeWrapper) UnmarshalJSON(bs []byte) error {
-	st := string(bs)
-	decPoint := len(st) - 3
-	in, err := strconv.Atoi(st[:decPoint])
+	const decPointOffset = 3                   // how many digits of the string are nanoseconds. Will be used to split the string at len(st) - decPointOffset
+	const nanoMult = 10 ^ (9 - decPointOffset) // Needed to convert the nanoseconds correctly
+
+	st := string(bs)                     // String of the []byte. This is needed because Jolokia gives an int in a string meaning it can't be decoded directly into an int
+	decPoint := len(st) - decPointOffset // position of the (imagined) decimal point in this string
+
+	sSecs, err := strconv.Atoi(st[:decPoint])
 	if err != nil {
 		return err
 	}
-	is, err := strconv.Atoi(st[decPoint:])
+	sNans, err := strconv.Atoi(st[decPoint:])
 	if err != nil {
 		return err
 	}
-	secs := int64(in)
-	nanos := int64(is) * 1000000
+
+	secs := int64(sSecs)
+	nanos := int64(sNans) * nanoMult
 
 	cT.Time = time.Unix(secs, nanos)
 	return nil
