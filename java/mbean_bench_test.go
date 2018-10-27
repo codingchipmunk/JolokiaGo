@@ -1,4 +1,4 @@
-package jolokiago
+package java
 
 import (
 	"encoding/json"

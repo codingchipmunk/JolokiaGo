@@ -1,7 +1,7 @@
 package messages
 
 import (
-	"github.com/codingchipmunk/jolokiago"
+	"github.com/codingchipmunk/jolokiago/java"
 )
 
 //	BaseRequest represents the fields which will always be required in a request to Jolokia.
@@ -12,7 +12,7 @@ type BaseRequest struct {
 	//Command which is needed for some requests. It won't be marshaled if left empty.
 	Command string `json:"command,omitempty"`
 	//MBean which is needed for some requests. It won't be marshaled if left empty.
-	MBean *jolokiago.MBean `json:"mbean,omitempty"`
+	MBean *java.MBean `json:"mbean,omitempty"`
 }
 
 // Returns a JSON representation of the struct to use as body when making POST requests
