@@ -12,11 +12,11 @@ type ResponseRoot struct {
 	Request   BaseRequest     `json:"request"`
 	Value     json.RawMessage `json:"value"`
 	History   json.RawMessage `json:"history"`
-	Error
+	ResponseError
 }
 
-//	Error contains fields related to internal erros in Jolokia.
-type Error struct {
+//	ResponseError contains fields related to internal erros in Jolokia.
+type ResponseError struct {
 	Type       string `json:"error_type"`
 	Message    string `json:"error"`
 	Stacktrace string `json:"stacktrace"`

@@ -26,7 +26,7 @@ type SseInfo struct {
 	Encoding    string `json:"backChannel.encoding"`
 }
 
-func decodeResponseValue(value json.RawMessage) (reg ResponseValue, err error) {
+func DecodeResponseValue(value json.RawMessage) (reg ResponseValue, err error) {
 	err = json.Unmarshal(value, reg)
 	return
 }

@@ -4,7 +4,6 @@ import (
 	"bytes"
 	"encoding/json"
 	"github.com/codingchipmunk/jolokiago/messages"
-	"github.com/codingchipmunk/jolokiago/responses"
 	"io"
 	"io/ioutil"
 	"net/http"
@@ -20,7 +19,7 @@ type Client struct {
 }
 
 // MakePOSTRequest makes an POST request to the Jolokia agent using the http.Client given to the client struct
-func (jc *Client) MakePOSTRequest(request messages.POSTRequest) (resp responses.Root, err error) {
+func (jc *Client) MakePOSTRequest(request messages.POSTRequest) (resp messages.ResponseRoot, err error) {
 	// Marshal the request
 	body, err := request.POSTBody()
 	if err != nil {
@@ -39,7 +38,7 @@ func (jc *Client) MakePOSTRequest(request messages.POSTRequest) (resp responses.
 }
 
 // MakeGETRequest makes an GET request to the Jolokia agent using the http.Client given to the client struct
-func (jc *Client) MakeGETRequest(request messages.GETRequest) (resp responses.Root, err error) {
+func (jc *Client) MakeGETRequest(request messages.GETRequest) (resp messages.ResponseRoot, err error) {
 	// Create a new Buffer for the url and the get-params
 	urlBuff := bytes.Buffer{}
 	urlBuff.WriteString(jc.url)
@@ -61,7 +60,7 @@ func (jc *Client) MakeGETRequest(request messages.GETRequest) (resp responses.Ro
 }
 
 // unmarshalResponse unmarshals the response from a response body (or any struct implementing the io.ReadCloser interface)
-func unmarshalResponse(responseBody io.ReadCloser) (resp responses.Root, err error) {
+func unmarshalResponse(responseBody io.ReadCloser) (resp messages.ResponseRoot, err error) {
 	// Read the response body
 	httpBody, err := ioutil.ReadAll(responseBody)
 	if err != nil {
