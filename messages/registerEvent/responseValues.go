@@ -1,7 +1,9 @@
-package registerEvents
+package registerEvent
 
-//	RegisterValue contains the root of the value field when a register request was made
-type RegisterValue struct {
+import "encoding/json"
+
+//	ResponseValue contains the root of the value field when a register request was made
+type ResponseValue struct {
 	Backend Backend `json:"backend"`
 	Id      string  `json:"id"`
 }
@@ -22,4 +24,9 @@ type PullInfo struct {
 type SseInfo struct {
 	ContentType string `json:"backChannel.contentType"`
 	Encoding    string `json:"backChannel.encoding"`
+}
+
+func decodeResponseValue(value json.RawMessage) (reg ResponseValue, err error) {
+	err = json.Unmarshal(value, reg)
+	return
 }
