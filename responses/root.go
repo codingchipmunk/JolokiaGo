@@ -2,7 +2,7 @@ package responses
 
 import (
 	"encoding/json"
-	"github.com/codingchipmunk/jolokiago/requests"
+	"github.com/codingchipmunk/jolokiago/messages"
 )
 
 //	Root represents the root of the JSON Response. Value and History are not unmarshaled since their type will vary from request to request.
@@ -10,7 +10,7 @@ import (
 type Root struct {
 	Status    int             `json:"status"`
 	Timestamp int             `json:"timestamp"`
-	Request   requests.Base   `json:"request"`
+	Request   messages.Base   `json:"request"`
 	Value     json.RawMessage `json:"value"`
 	History   json.RawMessage `json:"history"`
 	Error

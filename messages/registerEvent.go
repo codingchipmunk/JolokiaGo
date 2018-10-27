@@ -1,4 +1,4 @@
-package requests
+package messages
 
 //RegisterEvent represents the fields needed for a request to register a client identified by the ClientID field for JMX Notifications on a MBean.
 //The value of the response is represented in responses.RegisterValue
