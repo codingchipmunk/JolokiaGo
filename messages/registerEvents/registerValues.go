@@ -1,4 +1,4 @@
-package messages
+package registerEvents
 
 //	RegisterValue contains the root of the value field when a register request was made
 type RegisterValue struct {
