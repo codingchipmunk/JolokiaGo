@@ -14,6 +14,6 @@ type Request struct {
 
 // Returns a JSON representation of the struct to use as body when making POST requests
 // Simply calls SimplePOSTImpl
-func (re *Request) POSTBody() ([]byte, error){
+func (re *Request) POSTBody() ([]byte, error) {
 	return messages.SimplePOSTImpl(re)
 }

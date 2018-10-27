@@ -17,6 +17,6 @@ type BaseRequest struct {
 
 // Returns a JSON representation of the struct to use as body when making POST requests
 // Simply calls SimplePOSTImpl
-func (b *BaseRequest) POSTBody() ([]byte, error){
+func (b *BaseRequest) POSTBody() ([]byte, error) {
 	return SimplePOSTImpl(b)
 }
