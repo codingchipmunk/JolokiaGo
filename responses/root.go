@@ -2,7 +2,7 @@ package responses
 
 import (
 	"encoding/json"
-	"github.com/codingchipmunk/JolokiaGo/requests"
+	"github.com/codingchipmunk/jolokiago/requests"
 )
 
 //	Root represents the root of the JSON Response. Value and History are not unmarshaled since their type will vary from request to request.

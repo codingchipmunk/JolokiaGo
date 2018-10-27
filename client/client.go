@@ -3,8 +3,8 @@ package client
 import (
 	"bytes"
 	"encoding/json"
-	"github.com/codingchipmunk/JolokiaGo/requests"
-	"github.com/codingchipmunk/JolokiaGo/responses"
+	"github.com/codingchipmunk/jolokiago/requests"
+	"github.com/codingchipmunk/jolokiago/responses"
 	"io"
 	"io/ioutil"
 	"net/http"

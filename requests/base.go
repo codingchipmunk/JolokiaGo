@@ -1,7 +1,7 @@
 package requests
 
 import (
-	"github.com/codingchipmunk/JolokiaGo"
+	"github.com/codingchipmunk/jolokiago"
 )
 
 //	Base represents the fields which will always be required in a request to Jolokia.
