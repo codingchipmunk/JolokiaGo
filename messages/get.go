@@ -1,4 +1,4 @@
-package requests
+package messages
 
 // GETRequest should be implemented by request-structs to support being send via get
 type GETRequest interface {

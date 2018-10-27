@@ -3,7 +3,7 @@ package jolokiago
 import (
 	"bytes"
 	"encoding/json"
-	"github.com/codingchipmunk/jolokiago/requests"
+	"github.com/codingchipmunk/jolokiago/messages"
 	"github.com/codingchipmunk/jolokiago/responses"
 	"io"
 	"io/ioutil"
@@ -20,7 +20,7 @@ type Client struct {
 }
 
 // MakePOSTRequest makes an POST request to the Jolokia agent using the http.Client given to the client struct
-func (jc *Client) MakePOSTRequest(request requests.POSTRequest) (resp responses.Root, err error) {
+func (jc *Client) MakePOSTRequest(request messages.POSTRequest) (resp responses.Root, err error) {
 	// Marshal the request
 	body, err := request.POSTBody()
 	if err != nil {
@@ -39,7 +39,7 @@ func (jc *Client) MakePOSTRequest(request requests.POSTRequest) (resp responses.
 }
 
 // MakeGETRequest makes an GET request to the Jolokia agent using the http.Client given to the client struct
-func (jc *Client) MakeGETRequest(request requests.GETRequest) (resp responses.Root, err error) {
+func (jc *Client) MakeGETRequest(request messages.GETRequest) (resp responses.Root, err error) {
 	// Create a new Buffer for the url and the get-params
 	urlBuff := bytes.Buffer{}
 	urlBuff.WriteString(jc.url)
@@ -68,7 +68,7 @@ func unmarshalResponse(responseBody io.ReadCloser) (resp responses.Root, err err
 		return
 	}
 
-	// Unmarshal the response body into the response.Root struct
+	// Unmarshal the response body into the response.ResponseRoot struct
 	err = json.Unmarshal(httpBody, &resp)
 
 	return
