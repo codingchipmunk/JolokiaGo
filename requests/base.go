@@ -15,11 +15,8 @@ type Base struct {
 	MBean *jolokiago.MBean `json:"mbean,omitempty"`
 }
 
-//RegisterEvent represents the fields needed for a request to register a client identified by the ClientID field for JMX Notifications on a MBean.
-type RegisterEvent struct {
-	Base
-	// Mode for JMXEvents. Can be SSE or Pull-based.
-	Mode string `json:"mode"`
-	// ClientID of the Jolokia Client
-	ClientID string `json:"client"`
+// Returns a JSON representation of the struct to use as body when making POST requests
+// Simply calls SimplePOSTImpl
+func (b *Base) POSTBody() ([]byte, error){
+	return SimplePOSTImpl(b)
 }
