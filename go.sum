@@ -1,0 +1,6 @@
+github.com/r3labs/sse v0.0.0-20181016172519-5e4ce84a13e6 h1:MW1r9+3UHCQUjtIMJ/Aye7qP60By0RQx8gnbWLlHVJ0=
+github.com/r3labs/sse v0.0.0-20181016172519-5e4ce84a13e6/go.mod h1:GFTLGeO4uhsAhDsI1GgKFTegVYuNZ6g5qJ15Mheq7cI=
+golang.org/x/net v0.0.0-20181029044818-c44066c5c816 h1:mVFkLpejdFLXVUv9E42f3XJVfMdqd0IVLVIVLjZWn5o=
+golang.org/x/net v0.0.0-20181029044818-c44066c5c816/go.mod h1:mL1N/T3taQHkDXs73rZJwtUhF3w3ftmwwsq0BUmARs4=
+gopkg.in/cenkalti/backoff.v1 v1.1.0 h1:Arh75ttbsvlpVA7WtVpH4u9h6Zl46xuptxqLxPiSo4Y=
+gopkg.in/cenkalti/backoff.v1 v1.1.0/go.mod h1:J6Vskwqd+OMVJl8C33mmtxTBs2gyzfv7UDAkHu8BrjI=
