@@ -27,6 +27,6 @@ type SSEInfo struct {
 }
 
 func DecodeResponseValue(value json.RawMessage) (reg ResponseValue, err error) {
-	err = json.Unmarshal(value, reg)
+	err = json.Unmarshal(value, &reg)
 	return
 }
