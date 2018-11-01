@@ -17,3 +17,7 @@ type Request struct {
 func (re Request) POSTBody() ([]byte, error) {
 	return messages.SimplePOSTImpl(re)
 }
+
+func (re Request) GetContentType() string{
+	return "application/json"
+}

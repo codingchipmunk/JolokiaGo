@@ -15,6 +15,10 @@ type BaseRequest struct {
 	MBean java.MBean `json:"mbean,omitempty"`
 }
 
+func (b BaseRequest) GetContentType() string {
+	return "application/json"
+}
+
 // Returns a JSON representation of the struct to use as body when making POST requests
 // Simply calls SimplePOSTImpl
 func (b BaseRequest) POSTBody() ([]byte, error) {
