@@ -7,7 +7,7 @@ import (
 )
 
 // Root of an JMXEvent exposed by Jolokia
-type Root struct {
+type EventData struct {
 	Dropped       int            `json:"dropped"`
 	Handle        string         `json:"handle"`
 	Handback      string         `json:"handback"`
