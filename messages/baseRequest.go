@@ -12,11 +12,11 @@ type BaseRequest struct {
 	//Command which is needed for some requests. It won't be marshaled if left empty.
 	Command string `json:"command,omitempty"`
 	//MBean which is needed for some requests. It won't be marshaled if left empty.
-	MBean *java.MBean `json:"mbean,omitempty"`
+	MBean java.MBean `json:"mbean,omitempty"`
 }
 
 // Returns a JSON representation of the struct to use as body when making POST requests
 // Simply calls SimplePOSTImpl
-func (b *BaseRequest) POSTBody() ([]byte, error) {
+func (b BaseRequest) POSTBody() ([]byte, error) {
 	return SimplePOSTImpl(b)
 }
