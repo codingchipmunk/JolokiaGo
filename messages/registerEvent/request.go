@@ -18,6 +18,6 @@ func (re Request) POSTBody() ([]byte, error) {
 	return messages.SimplePOSTImpl(re)
 }
 
-func (re Request) GetContentType() string{
+func (re Request) ContentType() string{
 	return "application/json"
 }

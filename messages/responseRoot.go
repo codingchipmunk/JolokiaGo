@@ -2,6 +2,8 @@ package messages
 
 import (
 	"encoding/json"
+	"fmt"
+	"net/http"
 )
 
 //	ResponseRoot represents the root of the JSON Response. Value and History are not unmarshaled since their type will vary from request to request.
@@ -15,9 +17,18 @@ type ResponseRoot struct {
 	ResponseError
 }
 
+func (respRoot ResponseRoot) Successful() bool {
+	return respRoot.Status == http.StatusOK
+}
+
+
 //	ResponseError contains fields related to internal erros in Jolokia.
 type ResponseError struct {
 	Type       string `json:"error_type"`
 	Message    string `json:"error"`
 	Stacktrace string `json:"stacktrace"`
+}
+
+func (respErr ResponseError) Error() string {
+	return fmt.Sprintf("Error in Jolokia: Type: %s ; Message: %s ; Stacktrace: %s", respErr.Type, respErr.Message, respErr.Stacktrace)
 }

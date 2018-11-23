@@ -15,7 +15,7 @@ type BaseRequest struct {
 	MBean java.MBean `json:"mbean,omitempty"`
 }
 
-func (b BaseRequest) GetContentType() string {
+func (b BaseRequest) ContentType() string {
 	return "application/json"
 }
 

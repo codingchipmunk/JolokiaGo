@@ -22,7 +22,7 @@ const (
 
 //	Marsahlls an MBean into a form of Domain:context=bean.context,type=bean.type,name=bean.name
 //	Empty fields will be ignored when marshalled
-func (bean *MBean) MarshalText() ([]byte, error) {
+func (bean MBean) MarshalText() ([]byte, error) {
 	var buff bytes.Buffer
 
 	// Omit writing a domain if its empty

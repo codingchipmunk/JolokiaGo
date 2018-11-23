@@ -10,31 +10,38 @@ import (
 	"github.com/codingchipmunk/jolokiago/messages"
 )
 
-// MakePOSTRequest makes an POST request to the Jolokia agent using the http.Client given to the client struct
-func  MakePOSTRequest(url string, client *http.Client, request messages.POSTRequest ) (resp messages.ResponseRoot, err error) {
+// MakePOSTRequest makes an POST request to the Jolokia agent using the given http.Client
+func MakePOSTRequest(url string, client *http.Client, request messages.POSTRequest) (resp messages.ResponseRoot, err error) {
 	// Marshal the request
 	body, err := request.POSTBody()
 	if err != nil {
 		return
 	}
-
 	// Use the http client to make the request
-	httpResp, err := client.Post(url, request.GetContentType(), bytes.NewReader(body))
+	httpResp, err := client.Post(url, request.ContentType(), bytes.NewReader(body))
 	if err != nil {
 		return
 	}
 	// Immediately defer Body.Close() (idiomatic)
 	defer httpResp.Body.Close()
 
-	return unmarshalResponse(httpResp.Body)
+	resp, err = unmarshalResponse(httpResp.Body)
+	if err != nil {
+		return
+	}
+
+	if !resp.Successful() {
+		return resp, resp.ResponseError
+	}
+	return
 }
 
-// MakeGETRequest makes an GET request to the Jolokia agent using the http.Client given to the client struct
-func MakeGETRequest(url string, client *http.Client,request messages.GETRequest) (resp messages.ResponseRoot, err error) {
+// MakeGETRequest makes an GET request to the Jolokia agent using the given http.Client
+func MakeGETRequest(url string, client *http.Client, request messages.GETRequest) (resp messages.ResponseRoot, err error) {
 	// Create a new Buffer for the url and the get-params
 	urlBuff := bytes.Buffer{}
 	urlBuff.WriteString(url)
-	bts, err := request.GetAppendix()
+	bts, err := request.GETAppendix()
 	if err != nil {
 		return
 	}
@@ -46,9 +53,15 @@ func MakeGETRequest(url string, client *http.Client,request messages.GETRequest)
 	}
 	// Immediately defer Body.Close() (idiomatic)
 	defer httpResp.Body.Close()
+	resp, err = unmarshalResponse(httpResp.Body)
+	if err != nil {
+		return
+	}
 
-	return unmarshalResponse(httpResp.Body)
-
+	if !resp.Successful() {
+		return resp, resp.ResponseError
+	}
+	return
 }
 
 // unmarshalResponse unmarshals the response from a response body (or any struct implementing the io.ReadCloser interface)
@@ -61,6 +74,16 @@ func unmarshalResponse(responseBody io.ReadCloser) (resp messages.ResponseRoot, 
 
 	// Unmarshal the response body into the response.ResponseRoot struct
 	err = json.Unmarshal(httpBody, &resp)
+	if err != nil {
+		return
+	}
 
 	return
+}
+
+func CheckResponseError(resp messages.ResponseRoot) error {
+	if resp.Status != http.StatusOK {
+		return resp.ResponseError
+	}
+	return nil
 }

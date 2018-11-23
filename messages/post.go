@@ -7,7 +7,7 @@ import "encoding/json"
 type POSTRequest interface {
 	// Returns the body of the POST request which will be send to Jolokia
 	POSTBody() ([]byte, error)
-	GetContentType() string
+	ContentType() string
 }
 
 // Simply calls and returns the values of json.Marshal() with the given interface

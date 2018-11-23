@@ -1,8 +1,8 @@
 package events
 
 import (
-	"fmt"
 	"net/http"
+	"strings"
 
 	"github.com/codingchipmunk/jolokiago/backend"
 	"github.com/codingchipmunk/jolokiago/java"
@@ -11,7 +11,8 @@ import (
 	"github.com/r3labs/sse"
 )
 
-const sseClientURL = "%s/notification/open/%s/sse"
+const notificationPath = "/notification/open/"
+const ssePath = "/sse"
 
 type Listener struct {
 	id         string
@@ -22,13 +23,14 @@ type Listener struct {
 	started    bool
 }
 
-func New(baseURL string, id string, httpClient *http.Client) (lst *Listener) {
+func NewListener(baseURL string, id string, httpClient *http.Client) (*Listener) {
+	var lst Listener
 	lst.id = id
 	lst.baseURL = baseURL
 	lst.httpClient = httpClient
-	lst.sseClient = sse.NewClient(fmt.Sprintf(sseClientURL, baseURL, id))
-	lst.rawChannel = make(chan *sse.Event)
-	return
+	lst.sseClient = sse.NewClient(strings.TrimRight(baseURL, "/") + notificationPath + id + ssePath)
+	lst.started = false
+	return &lst
 }
 
 func (ls *Listener) ClientID() string {
@@ -47,24 +49,28 @@ func (ls *Listener) RawEvents() <-chan *sse.Event {
 	return ls.rawChannel
 }
 
-func (ls *Listener) Start() error {
+func (ls *Listener) StartListening() (<-chan *sse.Event, bool) {
 	if ls.started {
-		return nil
+		return ls.rawChannel, false
 	}
+	ls.rawChannel = make(chan *sse.Event)
 	go ls.sseClient.SubscribeChanRaw(ls.rawChannel)
-	return nil
+	ls.started = true
+	return ls.rawChannel, true
 }
 
-func (ls *Listener) IsRunning() bool{
+func (ls *Listener) IsRunning() bool {
 	return ls.started
 }
 
-func (ls *Listener) Stop() error {
+func (ls *Listener) Stop() bool {
 	if !ls.started {
-		return nil
+		return false
 	}
-	ls.sseClient.Unsubscribe(ls.rawChannel)
-	return nil
+	close(ls.rawChannel)
+	go ls.sseClient.Unsubscribe(ls.rawChannel)
+	ls.started = false
+	return true
 }
 
 func (ls *Listener) SubscribeToMBean(bean java.MBean) error {
